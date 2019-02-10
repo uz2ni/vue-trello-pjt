@@ -14,18 +14,24 @@
         </a>
       </div>
     </div>
+    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"/>
   </div>
 </template>
 
 <script>
 import {board} from '../api'
+import AddBoard from './AddBoard.vue'
 
 export default {
+  components: {
+    AddBoard
+  },
   data() {
     return {
       loading: false,
       boards: [],
-      error: ''
+      error: '',
+      isAddBoard: false
     }
   },
   created() {
@@ -48,7 +54,18 @@ export default {
       })
     },
     addBoard() {
-      console.log('addBoard()')
+      this.isAddBoard = true
+    },
+    onAddBoard(title) {
+      board.create(title)
+      .then(() => this.fetchData())
+      /*
+      현재 Home과 AddBoard컴포넌트가 중첩관계이다. (서로 왔다갔다)
+      이런게 많아지면 복잡해짐.
+      구지 Home에서 api부르지 않고 AddBoard에서 api호출하면 더 간단할 것 같다.
+      서비스 전반의 전역 성격의 상태값이 있을 수도 있다. (보드 색 설정)
+      체계적 관리 -> Vuex 상태관리
+      */
     }
   }
 

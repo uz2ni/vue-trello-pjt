@@ -31,6 +31,10 @@ if (token) setAuthInHeader(token)
 export const board = {
   fetch() {
     return request('get', '/boards')
+  },
+  // add board api
+  create(title) {
+    return request('post', '/boards', {title})
   }
 }
 
