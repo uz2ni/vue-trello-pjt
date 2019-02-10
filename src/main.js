@@ -1,22 +1,10 @@
 import Vue from 'vue'
+import router from './router'
 import App from './App.vue'
 
-const Login = { template: '<div>Login Page</div>' }
-const NotFound = { template: '<div>Page Not Found</div>' }
-
-const routes = {
-  '/': App,
-  '/login': Login,
-}
-
+// 루트 컴포넌트 (Vue 인스턴스)
 new Vue({
   el: '#app',
-  computed: {
-    VueComponent() {
-      return routes[window.location.pathname] || NotFound
-    }
-  },
-  render(h) {
-    return h(this.VueComponent)
-  }
+  router,
+  render: h => h(App) // App 컴포넌트를 부른다.
 })
