@@ -66,8 +66,7 @@ export default {
     //   this.$store.commit('SET_IS_ADD_BOARD', true)
     // },
     onAddBoard(title) {
-      board.create(title)
-      .then(() => this.fetchData())
+      this.fetchData()
       /*
       현재 Home과 AddBoard컴포넌트가 중첩관계이다. (서로 왔다갔다)
       이런게 많아지면 복잡해짐.
