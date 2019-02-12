@@ -14,14 +14,14 @@
         </a>
       </div>
     </div>
-    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"/>
+    <AddBoard v-if="isAddBoard" @close="isAddBoard=false"/>
   </div>
 </template>
 
 <script>
 import {board} from '../api'
 import AddBoard from './AddBoard.vue'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 
 export default {
   components: {
@@ -30,13 +30,13 @@ export default {
   data() {
     return {
       loading: false,
-      boards: [],
       error: '',
     }
   },
   computed: {
     ...mapState([
-      'isAddBoard'
+      'isAddBoard',
+      'boards'
     ])
   },
   created() {
@@ -51,30 +51,15 @@ export default {
     ...mapMutations([
       'SET_IS_ADD_BOARD'
     ]),
+    ...mapActions([
+      'FETCH_BOARDS'
+    ]),
     fetchData() {
       this.loading = true
-      board.fetch()
-        .then(data => {
-          this.boards = data.list
-        })
-      .finally(() => {
+      this.FETCH_BOARDS().finally(_ => {
         this.loading = false
       })
     },
-    // addBoard() {
-    //   //this.isAddBoard = true
-    //   this.$store.commit('SET_IS_ADD_BOARD', true)
-    // },
-    onAddBoard(title) {
-      this.fetchData()
-      /*
-      현재 Home과 AddBoard컴포넌트가 중첩관계이다. (서로 왔다갔다)
-      이런게 많아지면 복잡해짐.
-      구지 Home에서 api부르지 않고 AddBoard에서 api호출하면 더 간단할 것 같다.
-      서비스 전반의 전역 성격의 상태값이 있을 수도 있다. (보드 색 설정)
-      체계적 관리 -> Vuex 상태관리
-      */
-    }
   }
 
 }
