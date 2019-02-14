@@ -17,6 +17,11 @@ const actions = {
   // board item 보여줌
   FETCH_BOARD ({commit}, {id}) {
     return api.board.fetch(id).then(data => commit('SET_BOARD', data.item))
+  },
+  // 카드 추가 후 board item 조회
+  ADD_CARD ({dispatch, state}, {title, listId, pos}) {
+    return api.card.create(title, listId, pos)
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id})) // 현재 상태(context)에서의 FETCH_BOARD와 state 상태의 board객체의 id를 가져온다.
   }
 }
 

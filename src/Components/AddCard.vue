@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
+  props: ['listId'],
   data() {
     return {
       inputTitle: ''
@@ -26,8 +29,15 @@ export default {
     this.setupClickOutside(this.$el) // AddCard 컴포넌의 엘리멘트가 넘어감
   },
   methods: {
+    ...mapActions([
+      'ADD_CARD'
+    ]),
     onSubmit() {
-      console.log(this.inputTitle);
+      if(this.invalidInput) return
+      const {inputTitle, listId} = this
+      this.ADD_CARD({title: inputTitle, listId})
+        .finally(() => this.inputTitle = '')
+
     },
     setupClickOutside(el) {
       document.querySelector('body').addEventListener('click', e => {

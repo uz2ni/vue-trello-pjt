@@ -4,9 +4,12 @@
     <div class="list-header">
       <div class="list-header-title">{{data.title}}</div>
     </div>
+    <div class="card-list">
+      <CardItem v-for="card in data.cards" :key="card.id" :data="card" />
+    </div>
     <!-- list 추가 form -->
     <div v-if="isAddCard">
-      <AddCard @close="isAddCard=false" />
+      <AddCard :list-id="data.id" @close="isAddCard=false" />
     </div>
     <div v-else>
       <a class="add-card-btn" href="" @click.prevent="isAddCard=true">
@@ -18,10 +21,12 @@
 
 <script>
 import AddCard from './AddCard.vue'
+import CardItem from './CardItem.vue'
 
 export default {
   components: {
-    AddCard
+    AddCard,
+    CardItem
   },
   props: ['data'], // 부모 컴포넌트로부터 data 키를 통해 인스턴스 데이터를 받음
   data() {
