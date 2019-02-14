@@ -1,7 +1,7 @@
 <template> <!-- app 컴포넌트가 표시하는 인스턴스 템플릿 -->
   <div id="app">
     <Navbar />
-    <router-view></router-view>
+    <router-view class="container"></router-view>
   </div>
 </template>
 
