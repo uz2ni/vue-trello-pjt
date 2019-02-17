@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    <router-view></router-view> <!-- card 누르면 뜨는 모달창 -->
   </div>
 </template>
 

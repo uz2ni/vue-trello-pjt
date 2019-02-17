@@ -22,6 +22,17 @@ const actions = {
   ADD_CARD ({dispatch, state}, {title, listId, pos}) {
     return api.card.create(title, listId, pos)
       .then(() => dispatch('FETCH_BOARD', {id: state.board.id})) // 현재 상태(context)에서의 FETCH_BOARD와 state 상태의 board객체의 id를 가져온다.
+  },
+  // card 조회
+  FETCH_CARD ({commit}, {id}) {
+    return api.card.fetch(id).then(data => {
+      commit('SET_CARD', data.item)
+    })
+  },
+  // card 수정
+  UPDATE_CARD ({dispatch, state}, {id, title, description, pos, listId}) {
+    return api.card.update(id, {title, description, pos, listId})
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
   }
 }
 
