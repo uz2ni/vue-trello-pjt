@@ -28,6 +28,11 @@ const actions = {
     return api.card.fetch(id).then(data => {
       commit('SET_CARD', data.item)
     })
+  },
+  // card 수정
+  UPDATE_CARD ({dispatch, state}, {id, title, description, pos, listId}) {
+    return api.card.update(id, {title, description, pos, listId})
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
   }
 }
 
