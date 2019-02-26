@@ -33,6 +33,11 @@ const actions = {
   UPDATE_CARD ({dispatch, state}, {id, title, description, pos, listId}) {
     return api.card.update(id, {title, description, pos, listId})
       .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+  },
+  // card 삭제
+  DELETE_CARD({dispatch, state}, {id}) {
+    return api.card.destroy(id)
+    .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
   }
 }
 
