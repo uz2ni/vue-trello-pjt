@@ -35,9 +35,16 @@ export default {
     onSubmit() {
       if(this.invalidInput) return
       const {inputTitle, listId} = this
-      this.ADD_CARD({title: inputTitle, listId})
+      const pos = this.newCardPos() // pos값 추가
+      this.ADD_CARD({title: inputTitle, listId,pos})
         .finally(() => this.inputTitle = '')
-
+    },
+    newCardPos() {
+      const curList = this.$store.state.board.lists.filter(l => l.id === this.listId)[0]
+      if (!curList) return 65535 // board에 list가 없을 경우
+      const {cards} = curList
+      if (!cards.length) return 65535 // card가 존재하지 않을 경우
+      return cards[cards.length - 1].pos * 2 // card list 기존 값 있을 경우 마지막 pos의 2배로 지정
     },
     setupClickOutside(el) {
       document.querySelector('body').addEventListener('click', e => {
