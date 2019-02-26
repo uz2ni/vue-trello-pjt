@@ -23,7 +23,8 @@ const mutations = { // 변이
   },
   SET_CARD(state, card) {
     state.card = card
-  }
+  },
+
 }
 
 export default mutations
