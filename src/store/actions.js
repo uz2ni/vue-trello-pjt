@@ -16,7 +16,14 @@ const actions = {
   },
   // board item 보여줌
   FETCH_BOARD ({commit}, {id}) {
-    return api.board.fetch(id).then(data => commit('SET_BOARD', data.item))
+    return api.board.fetch(id).then(data => {
+      console.log(data)
+      commit('SET_BOARD', data.item)
+    })
+  },
+  // board 삭제
+  DELETE_BOARD (_, {id}) {
+    return api.board.destroy(id)
   },
   // 카드 추가 후 board item 조회
   ADD_CARD ({dispatch, state}, {title, listId, pos}) {
