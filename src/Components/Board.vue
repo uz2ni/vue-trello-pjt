@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 import List from './List.vue'
 import dragger from '../utils/dragger'
 
@@ -40,23 +40,30 @@ export default {
     ])
   },
   created() {
-    this.fetchData()
+    // then()은 fetchData()가 promise 반환 해줘야 사용 가능.
+    this.fetchData().then(() => {
+      this.SET_THEME(this.board.bgColor)
+    })
   },
   updated() {
     this.setCardDragabble()
   },
   methods: {
+    ...mapMutations([
+      'SET_THEME'
+    ]),
     ...mapActions([
       'FETCH_BOARD',
       'UPDATE_CARD'
     ]),
     fetchData() {
       this.loading = true
-      this.FETCH_BOARD({id: this.$route.params.bid})
+      // promise 반환
+      return this.FETCH_BOARD({id: this.$route.params.bid})
         .then(() => this.loading = false)
     },
     setCardDragabble() {
-      if (this.cDragger) this.cDragger.destroy()
+      if (this.cDragger) this.cDragger.destroy3()
       this.cDragger = dragger.init(Array.from(this.$el.querySelectorAll('.card-list')))
 
       this.cDragger.on('drop', (el, wrapper, target, siblings) => { //el: 선택한 card-item, wrapper:card-list
