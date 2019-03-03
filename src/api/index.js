@@ -3,9 +3,11 @@ import router from '../router'
 
 const DOMAIN = 'http://localhost:3000'
 const UNUTHRIZED = 401
+const NOTFOUND = 404
 const onUnauthrozied = () => {
   router.push('/login')
 }
+const onNotfound = () => router.push('/') // 404
 
 const request = (method, url, data) => {
   return axios({
@@ -16,6 +18,7 @@ const request = (method, url, data) => {
     .catch(result => {
       const {status} = result.response
       if (status === UNUTHRIZED) return onUnauthrozied()
+      else if (status === NOTFOUND) return onNotfound()
       throw Error(result)
     })
 }
@@ -32,6 +35,10 @@ export const board = {
   // add board api
   create(title) {
     return request('post', '/boards', {title})
+  },
+  // delete boards
+  destroy(id) {
+    return request('delete', `/boards/${id}`)
   }
 }
 
