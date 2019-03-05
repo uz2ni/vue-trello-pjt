@@ -25,6 +25,11 @@ const actions = {
   DELETE_BOARD (_, {id}) {
     return api.board.destroy(id)
   },
+  // board 수정
+  UPDATE_BOARD({dispatch, state}, {id, title, bgColor}) {
+    return api.board.update(id, { title, bgColor })
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+  },
   // 카드 추가 후 board item 조회
   ADD_CARD ({dispatch, state}, {title, listId, pos}) {
     return api.card.create(title, listId, pos)

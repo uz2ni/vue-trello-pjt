@@ -39,6 +39,9 @@ export const board = {
   // delete boards
   destroy(id) {
     return request('delete', `/boards/${id}`)
+  },
+  update(id, payload) { //payload:title, bgcolor 가져올 객체
+    return request('put', `/boards/${id}`, payload)
   }
 }
 
