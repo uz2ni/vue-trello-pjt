@@ -36,6 +36,10 @@ const actions = {
     return api.list.create({title, boardId, pos})
       .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
   },
+  UPDATE_LIST ({dispatch, state}, {id, title, pos}) {
+    return api.list.update(id, { pos, title })
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+  },
 
   // 카드 추가 후 board item 조회
   ADD_CARD ({dispatch, state}, {title, listId, pos}) {
